@@ -1,0 +1,129 @@
+##PACOTE DE PESQUISA##
+install.packages("academictwitteR") #pacote de pesquisa no tweeter
+library("academictwitteR")
+installed.packages("academictwitteR")
+setwd("/cloud/project") #diretório 
+install.packages("writexl") #pacote para converter em xl
+library("writexl")
+get_bearer() #Verificar bearer token
+set_bearer() #Usar bearer token
+install.packages("xlsx") #Pacote para converter em xls 
+library("xlsx")
+###############################################
+#FUNÇÃO CRIADA PARA CONCATENAR PALAVRAS DE INTERESSE:
+
+palavras=function(p1,p2){
+  n=length(p1)
+  n1=length(p2)
+  vet=NULL
+  for(i in 1:n){
+    for(j in 1:n1){
+      a=paste(p1[i],p2[j])
+      vet=c(a,vet)
+    }
+  }
+  return(vet)
+}
+
+#PESQUISA DE TWEETS MISOGENOS
+
+p1=c("mulher","garota","menina")
+p2=c("vadia","vadi@","v@di@","v@dia","puta","put@","vagabunda","v@g@bund@","vagabund@","interesseira","provocou","provoca","piranha","piranh@","poço de esperma", "burra", "burr@", "incopetente")
+
+q=palavras(p1,p2)
+
+misogenia<-  #NOME DO ARQUIVO GERADO
+  get_all_tweets(
+    query=q, #FRASES PESQUISADAS
+    start_tweets = "2022-01-20T00:00:00Z", #DATA E HORA INICIO DA PESQUISA
+    end_tweets = "2022-08-28T00:00:00Z", #DATA E HORA FINAL DA PESQUISA
+    file = "misogenia_tweets", # NOME DA VARIÁVEL NO DIRETORIO
+    is_retweet = FALSE, #PARA NAO RETORNAR RETWEETS
+    data_path = "data/", #CAMINHO DO DIRETORIO
+    n = 10000, #NUMERO LIMITE DE TWEETS RETORNADOS
+  )
+
+dim(misogenia)
+write_xlsx(misogenia,"misogenia.xlsx") #GERAÇÃO DE ARQUIVO EM XLSX
+
+#PESQUISA DE TWEETS HOMOFOBICOS
+
+p1=c("sapatão","viadinho","bichinha","traveco","mulher macho","trans")
+p2=c("tem que morrer","safado","safada","pecado","escrota","não é normal","ta errado")
+
+
+q=palavras(p1,p2)
+homofobia<-
+  get_all_tweets(
+    query=q,
+    start_tweets = "2022-01-20T00:00:00Z",
+    end_tweets = "2022-08-30T00:00:00Z",
+    file = "homofobia_tweets",
+    is_retweet = FALSE,
+    data_path = "data/",
+    n = 10000,
+  )
+dim(homofobia)
+write_xlsx(homofobia,"homofobia.xlsx")
+
+#PESQUISA DE TWEETS RACISTAS
+
+#racismo
+p1=c("preto","preta","neguinho","neguinha","mulata","mulato")
+p2=c("tem que morrer","bandido","macaco","macaca","escrota","fudido","fudida","raça ruim")
+
+
+q=palavras(p1,p2)
+racismo<-
+get_all_tweets(
+    query=q,
+    start_tweets = "2022-01-20T00:00:00Z",
+    end_tweets = "2022-08-30T00:00:00Z",
+    file = "racismo_tweets",
+    is_retweet = FALSE,
+    data_path = "data/",
+    n = 10000,
+  )
+dim(racismo)
+write_xlsx(racismo,"racismo.xlsx")
+
+#PESQUISAS DE TWEETS XENOFOBICOS
+
+#XENOFOBIA
+p1=c("nordestino","paraíba","sulista","carioca","venezuelano","chinês")
+p2=c("tem que morrer","de merda","volta seu país","porco","tudo","fudido","raça ruim")
+
+
+q=palavras(p1,p2)
+xenofobia<-
+  get_all_tweets(
+    query=q,
+    start_tweets = "2022-01-20T00:00:00Z",
+    end_tweets = "2022-08-30T00:00:00Z",
+    file = "xenofobia_tweets",
+    is_retweet = FALSE,
+    data_path = "data/",
+    n = 10000,
+  )
+dim(xenofobia)
+write_xlsx(xenofobia,"xenofobia.xlsx")
+
+#religião
+p1=c("macumbeiro","crente","católico","marçonaria","judeu","mulçumano")
+p2=c("tem que morrer","de merda","vai pro inferno","porco","tudo safado","fudido","raça ruim")
+
+#PESQUISA DE TWEETS COM INTOLERANCIA RELIGIOSA
+
+q=palavras(p1,p2)
+religião<-
+  get_all_tweets(
+    query=q,
+    start_tweets = "2022-01-20T00:00:00Z",
+    end_tweets = "2022-08-30T00:00:00Z",
+    file = "religião_tweets",
+    is_retweet = FALSE,
+    data_path = "data/",
+    n = 10000,
+ )
+dim(religião)
+write_xlsx(religião,"religião.xlsx")
